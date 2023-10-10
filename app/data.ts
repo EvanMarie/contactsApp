@@ -53,8 +53,7 @@ const fakeContacts = {
   },
 };
 
-////////////////////////////////////////////////////////////////////////////////
-// Handful of helper functions to be called from route loaders and actions
+
 export async function getContacts(query?: string | null) {
   await new Promise((resolve) => setTimeout(resolve, 500));
   let contacts = await fakeContacts.getAll();
@@ -87,6 +86,7 @@ export async function updateContact(id: string, updates: ContactMutation) {
 export async function deleteContact(id: string) {
   fakeContacts.destroy(id);
 }
+
 
 [
   {

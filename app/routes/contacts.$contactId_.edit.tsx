@@ -3,7 +3,8 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { getContact, updateContact } from "../data";
+// import { getContact, updateContact } from "../data";
+import { getContact, updateContact } from "~/myFakeData";
 import { Button } from "@chakra-ui/react";
 import { ButtonStyles } from "~/style/myStyles";
 
@@ -50,9 +51,9 @@ export default function EditContact() {
       <label>
         <span>Twitter</span>
         <input
-          defaultValue={contact.twitter}
-          name="twitter"
-          placeholder="@jack"
+          defaultValue={contact.birthday}
+          name="birtday"
+          placeholder="MM/DD/YYYY"
           type="text"
         />
       </label>

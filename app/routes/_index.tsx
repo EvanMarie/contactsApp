@@ -1,7 +1,8 @@
-import { Box, Wrap } from "@chakra-ui/react";
+import { Wrap } from "@chakra-ui/react";
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { ContactMutation, getContacts } from "~/data";
+import { ContactMutation, getContacts } from "~/myFakeData";
+// import { ContactMutation, getContacts } from "~/data";
 import { ContactMiniCard, Welcome } from "~/style/myStyles";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -24,7 +25,14 @@ export default function Index() {
   const shouldDisplayMiniCards = contacts.length > 0;
 
   return (
-    <Wrap w="100%" maxW="1200px" spacingY={3} spacingX={5}>
+    <Wrap
+      w="100%"
+      maxW="1200px"
+      spacingY={3}
+      spacingX={5}
+      justify="center"
+      pt={2}
+    >
       {shouldDisplayMiniCards ? (
         contacts.map((contact: ContactMutation) => (
           <ContactMiniCard key={contact.id} contact={contact} />

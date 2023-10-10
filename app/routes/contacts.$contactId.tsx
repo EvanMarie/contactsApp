@@ -1,7 +1,8 @@
 import { Form, useFetcher, useLoaderData } from "@remix-run/react";
 import type { FunctionComponent } from "react";
 
-import { getContact, type ContactRecord, updateContact } from "../data";
+// import { getContact, type ContactRecord, updateContact } from "../data";
+import { getContact, type ContactRecord, updateContact } from "~/myFakeData";
 import { ActionFunctionArgs, LoaderFunctionArgs, json } from "@remix-run/node";
 import invariant from "tiny-invariant";
 
@@ -47,13 +48,7 @@ export default function Contact() {
           <Favorite contact={contact} />
         </h1>
 
-        {contact.twitter ? (
-          <p>
-            <a href={`https://twitter.com/${contact.twitter}`}>
-              {contact.twitter}
-            </a>
-          </p>
-        ) : null}
+        {contact.birthday ? <p>{contact.birthday}</p> : null}
 
         {contact.notes ? <p>{contact.notes}</p> : null}
 
