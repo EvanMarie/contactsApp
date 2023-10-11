@@ -1,10 +1,13 @@
 import { Form, useFetcher, useLoaderData } from "@remix-run/react";
-import type { FunctionComponent } from "react";
+import { useState, type FunctionComponent } from "react";
 
 // import { getContact, type ContactRecord, updateContact } from "../data";
 import { getContact, type ContactRecord, updateContact } from "~/myFakeData";
 import { ActionFunctionArgs, LoaderFunctionArgs, json } from "@remix-run/node";
 import invariant from "tiny-invariant";
+import { Box, HStack, IconButton, VStack } from "@chakra-ui/react";
+import { ButtonStyles, ContactFullCard } from "~/style/myStyles";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.contactId, "Missing contactId param");
@@ -27,36 +30,21 @@ export default function Contact() {
   const { contact } = useLoaderData<typeof loader>();
 
   return (
-    <div id="contact">
-      <div>
-        <img
-          alt={`${contact.first} ${contact.last} avatar`}
-          key={contact.avatar}
-          src={contact.avatar}
-        />
-      </div>
-
-      <div>
-        <h1>
-          {contact.first || contact.last ? (
-            <>
-              {contact.first} {contact.last}
-            </>
-          ) : (
-            <i>No Name</i>
-          )}{" "}
+    <VStack w="100%" pt={4}>
+      <Box position="relative">
+        <ContactFullCard contact={contact} />
+        <HStack spacing={3} position="absolute" top="15px" right="50px">
           <Favorite contact={contact} />
-        </h1>
-
-        {contact.birthday ? <p>{contact.birthday}</p> : null}
-
-        {contact.notes ? <p>{contact.notes}</p> : null}
-
-        <div>
           <Form action="edit">
-            <button type="submit">Edit</button>
+            <IconButton
+              type="submit"
+              aria-label="edit contact"
+              {...ButtonStyles}
+              px={2}
+              minW="40px"
+              icon={<EditIcon boxSize={5} />}
+            />
           </Form>
-
           <Form
             action="destroy"
             method="post"
@@ -69,15 +57,22 @@ export default function Contact() {
               }
             }}
           >
-            <button type="submit">Delete</button>
+            <IconButton
+              type="submit"
+              aria-label="delete contact"
+              {...ButtonStyles}
+              px={2}
+              minW="40px"
+              icon={<DeleteIcon boxSize={5} />}
+            />
           </Form>
-        </div>
-      </div>
-    </div>
+        </HStack>
+      </Box>
+    </VStack>
   );
 }
 
-const Favorite: FunctionComponent<{
+export const Favorite: FunctionComponent<{
   contact: Pick<ContactRecord, "favorite">;
 }> = ({ contact }) => {
   const fetcher = useFetcher();
@@ -85,12 +80,28 @@ const Favorite: FunctionComponent<{
     ? fetcher.formData.get("favorite") === "true"
     : contact.favorite;
 
+  const [isHovered, setIsHovered] = useState(false);
+
+  const buttonStyle = {
+    backgroundColor: isHovered ? "#D6BCFA" : "#0BC5EA",
+    padding: "0px 8px",
+    borderRadius: "4px",
+    height: "40px",
+    width: "40px",
+    fontSize: "25px",
+    background: "#0BC5EA",
+    transition: "background-color 0.3s ease-in-out",
+  };
+
   return (
     <fetcher.Form method="post">
       <button
         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
         name="favorite"
         value={favorite ? "false" : "true"}
+        style={buttonStyle}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         {favorite ? "★" : "☆"}
       </button>
