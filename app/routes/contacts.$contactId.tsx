@@ -6,7 +6,7 @@ import { getContact, type ContactRecord, updateContact } from "~/myFakeData";
 import { ActionFunctionArgs, LoaderFunctionArgs, json } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { Flex, VStack } from "@chakra-ui/react";
-import { ContactFullCard } from "~/style/myStyles";
+import { ContactFullCard } from "~/components/cardLarge";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.contactId, "Missing contactId param");

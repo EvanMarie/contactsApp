@@ -3,8 +3,9 @@ import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { ContactMutation, getContacts } from "~/myFakeData";
 // import { ContactMutation, getContacts } from "~/data";
-import { ContactMiniCard, scrollBarStyles } from "~/style/myStyles";
+import { scrollBarStyles } from "~/style/myStyles";
 import Welcome from "~/components/welcome";
+import { ContactMiniCard } from "~/components/cardMini";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -38,8 +39,8 @@ export default function Index() {
     >
       <Wrap w="100%" maxW="1200px" spacingY={3} spacingX={5} justify="center">
         {shouldDisplayMiniCards ? (
-          contacts.map((contact: ContactMutation) => (
-            <ContactMiniCard key={contact.id} contact={contact} />
+          contacts.map((contact: ContactMutation, index) => (
+            <ContactMiniCard key={index} contact={contact} />
           ))
         ) : (
           <Welcome />

@@ -82,7 +82,6 @@ export default function App() {
   const location = useLocation();
   const { contacts, q } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
-  const navigate = useNavigate();
   const submit = useSubmit();
   const searching =
     navigation.location &&
@@ -123,92 +122,97 @@ export default function App() {
                   position="relative"
                 >
                   <Stack
-                    direction={{ base: "column", md: "row" }}
+                    direction={{ base: "column", lg: "row" }}
                     w="100%"
-                    maxW="750px"
-                    px={2}
+                    px={4}
                     zIndex="200"
                     spacing={4}
-                    justify={{ base: "center", md: "space-evenly" }}
-                    align={{ base: "center", md: "center" }}
+                    justify={{ base: "center", lg: "space-between" }}
+                    align={{ base: "center", lg: "center" }}
                   >
-                    <HStack w="100%" justify="center" spacing={4}>
-                      <Button
-                        onClick={() => {
-                          navigate("/");
-                        }}
-                        {...ButtonStyles}
-                      >
-                        <HStack>
-                          <Image
-                            src="/contactsImage.png"
-                            h="30px"
-                            objectFit="cover"
-                          />
-                          <Text>Contacts</Text>
-                        </HStack>
-                      </Button>
-                      <Form method="post">
-                        <Button type="submit" {...ButtonStyles}>
-                          <HStack w="100%">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1.5}
-                              stroke="currentColor"
-                              width="25px"
-                              height="25px"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                    <Stack
+                      w={{ base: "100%", lg: "66%" }}
+                      direction={{ base: "column", md: "row" }}
+                      justify={{ base: "center", md: "space-between" }}
+                      spacing={{ base: 4, md: 0 }}
+                    >
+                      <HStack justify="center" spacing={4}>
+                        <NavLink to="/">
+                          <Button {...ButtonStyles}>
+                            <HStack>
+                              <Image
+                                src="/contactsImage.png"
+                                h="30px"
+                                objectFit="cover"
                               />
-                            </svg>
-                            <Text>New Contact</Text>
-                          </HStack>
-                        </Button>
-                      </Form>
-                    </HStack>
-
-                    <Flex w={{ base: "auto", md: "50%" }} justify="center">
-                      <Form
-                        id="search-form"
-                        onChange={(event) => {
-                          const isFirstSearch = q === null;
-                          submit(event.currentTarget, {
-                            replace: !isFirstSearch,
-                          });
-                        }}
-                        role="search"
+                              <Text>Contacts</Text>
+                            </HStack>
+                          </Button>
+                        </NavLink>
+                        <Form method="post">
+                          <Button type="submit" {...ButtonStyles}>
+                            <HStack w="100%">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                width="25px"
+                                height="25px"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                                />
+                              </svg>
+                              <Text>New Contact</Text>
+                            </HStack>
+                          </Button>
+                        </Form>
+                      </HStack>
+                      <Flex
+                        w={{ base: "100%", md: "fit-content" }}
+                        justify="center"
                       >
-                        <InputGroup>
-                          <InputLeftElement color="cyan.200">
-                            <Search2Icon />
-                          </InputLeftElement>{" "}
-                          <Input
-                            id="q"
-                            aria-label="Search contacts"
-                            placeholder="Search Contacts"
-                            type="search"
-                            name="q"
-                            defaultValue={q || ""}
-                            sx={InputStyles}
-                            focusBorderColor="cyan.400"
+                        <Form
+                          id="search-form"
+                          onChange={(event) => {
+                            const isFirstSearch = q === null;
+                            submit(event.currentTarget, {
+                              replace: !isFirstSearch,
+                            });
+                          }}
+                          role="search"
+                        >
+                          <InputGroup>
+                            <InputLeftElement color="cyan.200">
+                              <Search2Icon />
+                            </InputLeftElement>{" "}
+                            <Input
+                              id="q"
+                              aria-label="Search contacts"
+                              placeholder="Search Contacts"
+                              type="search"
+                              name="q"
+                              defaultValue={q || ""}
+                              sx={InputStyles}
+                              focusBorderColor="cyan.400"
+                            />
+                          </InputGroup>
+                          <div
+                            id="search-spinner"
+                            aria-hidden
+                            hidden={!searching}
                           />
-                        </InputGroup>
-                        <div
-                          id="search-spinner"
-                          aria-hidden
-                          hidden={!searching}
-                        />
-                      </Form>
+                        </Form>
+                      </Flex>
+                    </Stack>
+                    <Flex>
+                      <TimeWidget />
                     </Flex>
                   </Stack>{" "}
-                  <Flex w="100%" justify="center" pr="10px">
-                    <TimeWidget />
-                  </Flex>
                   <Box
                     w="100%"
                     overflowX="auto"
@@ -218,8 +222,8 @@ export default function App() {
                   >
                     {contacts.length ? (
                       <HStack w="fit-content" pb={3} spacing={4}>
-                        {contacts.map((contact) => (
-                          <Box position="relative" key={contact.id}>
+                        {contacts.map((contact, index) => (
+                          <Box position="relative" key={index}>
                             {contact.favorite && (
                               <Badge
                                 position="absolute"

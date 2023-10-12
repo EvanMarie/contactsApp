@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import WidgetCard from "./widgetCard";
+import { Button, HStack, Image, Text } from "@chakra-ui/react";
+import { ButtonStyles } from "~/style/myStyles";
 
 // Define a type for the quote, which is a string in this case
 type Quote = string;
@@ -57,9 +60,42 @@ export default function UncleIrohQuotes() {
   }, []);
 
   return (
-    <div>
-      <p id="quoteBox">{quote}</p>
-      <button onClick={getNewQuote}>New Quote</button>
-    </div>
+    <WidgetCard image="/iroh.webp" cardHeight="fit-content">
+      <HStack w="100%" justify="space-between">
+        {" "}
+        <Text fontSize="2xl" fontWeight="bold" color="cyan.300">
+          Uncle Iroh Says...
+        </Text>
+        <Button {...ButtonStyles} minW="40px" px={0} onClick={getNewQuote}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            width="25px"
+            height="25px"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+            />
+          </svg>
+        </Button>
+      </HStack>
+      <Text fontStyle="italic" fontSize="lg">
+        {quote}
+      </Text>
+
+      <Image
+        src="/iroh.webp"
+        w="250px"
+        h="250px"
+        objectFit="cover"
+        rounded="lg"
+        shadow="2px 2px 2px black"
+      />
+    </WidgetCard>
   );
 }

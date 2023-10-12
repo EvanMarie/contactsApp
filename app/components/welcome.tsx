@@ -1,8 +1,11 @@
+import DadJokes from "./dadJokes";
+import UncleIrohQuotes from "./uncleIroh";
+
 export default function Welcome() {
   return (
     <div>
-      {/* <UncleIrohQuotes /> */}
-      nothing
+      <UncleIrohQuotes />
+      <DadJokes />
     </div>
   );
 }

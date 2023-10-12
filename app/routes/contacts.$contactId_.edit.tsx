@@ -125,7 +125,7 @@ export default function EditContact() {
             maxW={{ base: "500px", md: "625px", lg: "1200px" }}
             pt={4}
             spacing={4}
-            bg="gray.500"
+            bg="gray.700"
             p={4}
             rounded="md"
             shadow="2xl"
