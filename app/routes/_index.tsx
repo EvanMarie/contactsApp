@@ -1,9 +1,10 @@
-import { Wrap } from "@chakra-ui/react";
+import { Flex, Wrap } from "@chakra-ui/react";
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { ContactMutation, getContacts } from "~/myFakeData";
 // import { ContactMutation, getContacts } from "~/data";
-import { ContactMiniCard, Welcome } from "~/style/myStyles";
+import { ContactMiniCard, scrollBarStyles } from "~/style/myStyles";
+import Welcome from "~/components/welcome";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -25,21 +26,25 @@ export default function Index() {
   const shouldDisplayMiniCards = contacts.length > 0;
 
   return (
-    <Wrap
-      w="100%"
-      maxW="1200px"
-      spacingY={3}
-      spacingX={5}
+    <Flex
       justify="center"
-      pt={2}
+      w="100%"
+      h={{ base: "75vh", sm: "81vh" }}
+      flex="1"
+      overflowY="auto"
+      sx={scrollBarStyles}
+      py="20px"
+      align="flex-start"
     >
-      {shouldDisplayMiniCards ? (
-        contacts.map((contact: ContactMutation) => (
-          <ContactMiniCard key={contact.id} contact={contact} />
-        ))
-      ) : (
-        <Welcome />
-      )}
-    </Wrap>
+      <Wrap w="100%" maxW="1200px" spacingY={3} spacingX={5} justify="center">
+        {shouldDisplayMiniCards ? (
+          contacts.map((contact: ContactMutation) => (
+            <ContactMiniCard key={contact.id} contact={contact} />
+          ))
+        ) : (
+          <Welcome />
+        )}
+      </Wrap>
+    </Flex>
   );
 }

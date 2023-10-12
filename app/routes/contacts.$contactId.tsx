@@ -1,13 +1,12 @@
-import { Form, useFetcher, useLoaderData } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
 import { useState, type FunctionComponent } from "react";
 
 // import { getContact, type ContactRecord, updateContact } from "../data";
 import { getContact, type ContactRecord, updateContact } from "~/myFakeData";
 import { ActionFunctionArgs, LoaderFunctionArgs, json } from "@remix-run/node";
 import invariant from "tiny-invariant";
-import { Box, HStack, IconButton, VStack } from "@chakra-ui/react";
-import { ButtonStyles, ContactFullCard } from "~/style/myStyles";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { Flex, VStack } from "@chakra-ui/react";
+import { ContactFullCard } from "~/style/myStyles";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.contactId, "Missing contactId param");
@@ -27,47 +26,11 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
 };
 
 export default function Contact() {
-  const { contact } = useLoaderData<typeof loader>();
-
   return (
-    <VStack w="100%" pt={4}>
-      <Box position="relative">
-        <ContactFullCard contact={contact} />
-        <HStack spacing={3} position="absolute" top="15px" right="50px">
-          <Favorite contact={contact} />
-          <Form action="edit">
-            <IconButton
-              type="submit"
-              aria-label="edit contact"
-              {...ButtonStyles}
-              px={2}
-              minW="40px"
-              icon={<EditIcon boxSize={5} />}
-            />
-          </Form>
-          <Form
-            action="destroy"
-            method="post"
-            onSubmit={(event) => {
-              const response = confirm(
-                "Please confirm you want to delete this record."
-              );
-              if (!response) {
-                event.preventDefault();
-              }
-            }}
-          >
-            <IconButton
-              type="submit"
-              aria-label="delete contact"
-              {...ButtonStyles}
-              px={2}
-              minW="40px"
-              icon={<DeleteIcon boxSize={5} />}
-            />
-          </Form>
-        </HStack>
-      </Box>
+    <VStack w="100%">
+      <Flex w="100%" justify="center">
+        <ContactFullCard />
+      </Flex>
     </VStack>
   );
 }

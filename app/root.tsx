@@ -6,6 +6,7 @@ import {
   ChakraProvider,
   Flex,
   HStack,
+  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -26,6 +27,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLocation,
+  useNavigate,
 } from "@remix-run/react";
 import styles from "./style/global.css";
 import {
@@ -46,6 +48,7 @@ import {
 } from "./style/myStyles";
 import CustomTheme from "./style/theme";
 import { Search2Icon } from "@chakra-ui/icons";
+import { TimeWidget } from "./components/timeWidget";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -59,7 +62,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Onest:wght@100;200;300;400;500;600;700;800;900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;600;700;800;900&family=Onest:wght@100;200;300;400;500;600;700;800;900&display=swap",
   },
 ];
 
@@ -67,7 +70,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
   const contacts = await getContacts(q);
-  return json({ contacts });
+  return json({ contacts, q });
 };
 
 export const action = async () => {
@@ -79,6 +82,7 @@ export default function App() {
   const location = useLocation();
   const { contacts, q } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
+  const navigate = useNavigate();
   const submit = useSubmit();
   const searching =
     navigation.location &&
@@ -90,6 +94,7 @@ export default function App() {
       searchField.value = q || "";
     }
   }, [q]);
+
   return (
     <html lang="en">
       <head>
@@ -105,6 +110,7 @@ export default function App() {
               w="100%"
               maxW="1500px"
               bg="cyan.900"
+              bgGradient="linear(to-r, gray.700, cyan.900, cyan.900, gray.700)"
               shadow="0px 0px 10px rgba(0,0,0,0.7)"
             >
               <VStack w="100%" maxW="1500px" position="fixed">
@@ -114,17 +120,59 @@ export default function App() {
                   pt="20px"
                   pb="5px"
                   borderBottom="1px solid cyan"
+                  position="relative"
                 >
                   <Stack
                     direction={{ base: "column", md: "row" }}
                     w="100%"
-                    maxW="800px"
-                    px={4}
+                    maxW="750px"
+                    px={2}
                     zIndex="200"
                     spacing={4}
-                    justify={{ base: "center", md: "space-between" }}
+                    justify={{ base: "center", md: "space-evenly" }}
+                    align={{ base: "center", md: "center" }}
                   >
-                    <Flex w={{ base: "100%", md: "50%" }} justify="center">
+                    <HStack w="100%" justify="center" spacing={4}>
+                      <Button
+                        onClick={() => {
+                          navigate("/");
+                        }}
+                        {...ButtonStyles}
+                      >
+                        <HStack>
+                          <Image
+                            src="/contactsImage.png"
+                            h="30px"
+                            objectFit="cover"
+                          />
+                          <Text>Contacts</Text>
+                        </HStack>
+                      </Button>
+                      <Form method="post">
+                        <Button type="submit" {...ButtonStyles}>
+                          <HStack w="100%">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              width="25px"
+                              height="25px"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                              />
+                            </svg>
+                            <Text>New Contact</Text>
+                          </HStack>
+                        </Button>
+                      </Form>
+                    </HStack>
+
+                    <Flex w={{ base: "auto", md: "50%" }} justify="center">
                       <Form
                         id="search-form"
                         onChange={(event) => {
@@ -157,54 +205,19 @@ export default function App() {
                         />
                       </Form>
                     </Flex>
-                    <HStack w="100%" justify="center" spacing={5}>
-                      <Form method="post">
-                        <Button type="submit" {...ButtonStyles}>
-                          <HStack w="100%">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1.5}
-                              stroke="currentColor"
-                              width="25px"
-                              height="25px"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                              />
-                            </svg>
-                            <Text>New Contact</Text>
-                          </HStack>
-                        </Button>
-                      </Form>
-                      <Button {...ButtonStyles} as={NavLink} to="/">
-                        <HStack w="100%" justify="center">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            width="25px"
-                            height="25px"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-                            />
-                          </svg>
-                          <Text>Home</Text>
-                        </HStack>
-                      </Button>
-                    </HStack>
-                  </Stack>
-                  <Box w="100%" overflowX="auto" px={4} sx={scrollBarStyles}>
+                  </Stack>{" "}
+                  <Flex w="100%" justify="center" pr="10px">
+                    <TimeWidget />
+                  </Flex>
+                  <Box
+                    w="100%"
+                    overflowX="auto"
+                    pl="10px"
+                    pt={2}
+                    sx={scrollBarStyles}
+                  >
                     {contacts.length ? (
-                      <HStack w="fit-content" py={6} spacing={4}>
+                      <HStack w="fit-content" pb={3} spacing={4}>
                         {contacts.map((contact) => (
                           <Box position="relative" key={contact.id}>
                             {contact.favorite && (
@@ -259,17 +272,7 @@ export default function App() {
                   </Box>{" "}
                 </VStack>
                 <Flex w="100%">
-                  <Flex
-                    justify="center"
-                    w="100%"
-                    h={{ base: "75vh", sm: "81vh" }}
-                    flex="1"
-                    overflowY="auto"
-                    sx={scrollBarStyles}
-                    pb="20px"
-                  >
-                    <Outlet />
-                  </Flex>
+                  <Outlet />
                 </Flex>{" "}
               </VStack>
             </Flex>
