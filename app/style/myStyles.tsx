@@ -10,6 +10,7 @@ export const ButtonStyles = {
   borderRadius: "md",
   _hover: {
     bg: "purple.200",
+    shadow: "2px 2px 5px rgba(0,0,0,0.7)",
   },
 };
 
@@ -64,9 +65,9 @@ export const InputStyles = {
   bg: "gray.700",
   w: "375px",
   color: "gray.50",
-  border: "2px solid",
+  border: "1px solid",
   shadow: "2xl",
-  borderColor: "gray.700",
+  borderColor: "gray.600",
   borderRadius: "md",
   _hover: {
     bg: "gray.600",

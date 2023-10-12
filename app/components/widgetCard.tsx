@@ -45,7 +45,7 @@ export default function WidgetCard({
           roundedTop="lg"
           justify="space-between"
           px={4}
-          py={2}
+          py={1}
           shadow="1px 1px 1px black"
           borderBottom="1px solid rgba(0,0,0,0.5)"
         >

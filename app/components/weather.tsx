@@ -89,7 +89,7 @@ export default function Weather() {
 
   return (
     <WidgetCard title="Weather" cardHeight="fit-content" showButton={false}>
-      <VStack>
+      <VStack spacing={0}>
         <HStack>
           <Input
             type="text"
@@ -98,6 +98,8 @@ export default function Weather() {
             maxW="150px"
             value={zip}
             onChange={handleZipChange}
+            focusBorderColor="cyan.400"
+            h="35px"
           />
           <Input
             type="text"
@@ -106,6 +108,8 @@ export default function Weather() {
             maxW="150px"
             value={city}
             onChange={handleCityChange}
+            focusBorderColor="cyan.400"
+            h="35px"
           />
           <IconButton
             h="35px"

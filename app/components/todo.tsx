@@ -42,7 +42,7 @@ const TodoList: React.FC = () => {
   };
 
   return (
-    <WidgetCard title="To Do List" showButton={false}>
+    <WidgetCard title="To Do List" showButton={false} cardHeight="fit-content">
       <VStack spacing={4}>
         <HStack w="100%">
           <Input
@@ -51,6 +51,8 @@ const TodoList: React.FC = () => {
             placeholder="Add todo"
             {...InputStyles}
             maxW="300px"
+            focusBorderColor="cyan.400"
+            h="35px"
           />
           <IconButton
             onClick={addTodo}
@@ -60,7 +62,7 @@ const TodoList: React.FC = () => {
             w="35px"
           />
         </HStack>
-        <VStack w="100%" spacing={1}>
+        <VStack w="100%" spacing={1} fontSize="lg">
           {todos.map((todo) => (
             <HStack key={todo.id} w="100%" justify="space-between">
               <HStack>
