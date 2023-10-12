@@ -1,4 +1,4 @@
-# Contacts Maxx! 50lbs of flare in a 10lb app! (What does that even mean?!)
+# 50lbs of flare in a 10lb app! (👀)
 
 Contacts Maxx takes the foundational structure from a typical Remix contacts app and elevates it to new heights. This vibrant, feature-rich application not only allows users to keep track of their contacts but also enriches daily life management through a multi-feature dashboard. Users can indulge in daily wisdom quotes, chuckle at dad jokes, organize their to-do list, explore weather patterns, dive into current news, and more—all within a visually stunning interface.
 
