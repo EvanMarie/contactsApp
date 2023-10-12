@@ -30,7 +30,7 @@ export default function Index() {
     <Flex
       justify="center"
       w="100%"
-      h={{ base: "75vh", sm: "81vh" }}
+      h={{ base: "75vh", sm: "83vh" }}
       flex="1"
       overflowY="auto"
       sx={scrollBarStyles}

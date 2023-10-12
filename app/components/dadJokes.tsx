@@ -1,52 +1,44 @@
 // import "./styles.css";
-import { useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react"; // Import useEffect here
 import WidgetCard from "./widgetCard";
-import { HStack, Image, Text, VStack } from "@chakra-ui/react";
-import RepeatButton from "./repeatButton";
+import { Image, Text, VStack } from "@chakra-ui/react";
 
 export default function DadJokes() {
   const apiRoute = "https://icanhazdadjoke.com/";
-  const [data, setData] = useState({ joke: "Click for a dad joke!" });
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function axiosJoke() {
-    setData({ joke: "...loading" });
-    const result = await axios.get(apiRoute, {
-      headers: { Accept: "application/json" },
-    });
-    console.log(result);
-    setData(
-      result.data.status === 200 ? result.data : { joke: "No Joke available" }
-    );
-  }
+  const [data, setData] = useState({ joke: "...loading" });
 
   async function fetchJoke() {
     setData({ joke: "...loading" });
-    const result = await fetch(apiRoute, {
-      headers: { Accept: "application/json" },
-    });
-    console.log(result);
-    if (!result.ok) {
-      throw new Error("Result OK");
+    try {
+      const result = await fetch(apiRoute, {
+        headers: { Accept: "application/json" },
+      });
+
+      if (!result.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await result.json();
+      setData(data.status === 200 ? data : { joke: "No Joke available" });
+    } catch (error) {
+      console.error("fetchJoke failed", error);
+      setData({ joke: "No Joke available" });
     }
-    const data = await result.json();
-    console.log(data);
-    setData(data.status === 200 ? data : { joke: "No Joke available" });
   }
 
+  useEffect(() => {
+    fetchJoke();
+  }, []);
+
   return (
-    <WidgetCard bg="gray.600" cardHeight="fit-content">
+    <WidgetCard
+      bg="gray.600"
+      cardHeight="fit-content"
+      title="You can haz dad joke..."
+      onClick={fetchJoke} // Fetch a new joke when the card is clicked
+    >
       <VStack w="100%">
-        <HStack w="100%" justify="space-between">
-          {" "}
-          <Text fontSize="2xl" fontWeight="bold" color="cyan.200">
-            You can haz dad joke...
-          </Text>
-          <RepeatButton onClick={fetchJoke} />
-        </HStack>
         <Text fontSize="xl">{data.joke.split("? ").join("?\n\n~ ")}</Text>{" "}
-        <Image src="/dadJoke.png" alt="Dad Joke" h="250px" objectFit="cover" />
+        <Image src="/dadJoke.png" alt="Dad Joke" h="150px" objectFit="cover" />
       </VStack>
     </WidgetCard>
   );
