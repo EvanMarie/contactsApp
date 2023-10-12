@@ -23,7 +23,7 @@ export default function WidgetCard({
       h={cardHeight}
       color={color}
       bg={bg}
-      shadow="2xl"
+      shadow="2px 2px 5px rgba(0,0,0,0.7)"
       p={3}
       pt={2}
       sx={{

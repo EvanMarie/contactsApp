@@ -2,7 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import WidgetCard from "./widgetCard";
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { HStack, Image, Text, VStack } from "@chakra-ui/react";
 import RepeatButton from "./repeatButton";
 
 export default function DadJokes() {
@@ -36,16 +36,17 @@ export default function DadJokes() {
   }
 
   return (
-    <WidgetCard bg="cyan.600" cardHeight="fit-content">
+    <WidgetCard bg="gray.600" cardHeight="fit-content">
       <VStack w="100%">
         <HStack w="100%" justify="space-between">
           {" "}
-          <Text fontSize="2xl" fontWeight="bold" color="gray.900">
+          <Text fontSize="2xl" fontWeight="bold" color="cyan.200">
             You can haz dad joke...
           </Text>
           <RepeatButton onClick={fetchJoke} />
         </HStack>
         <Text fontSize="xl">{data.joke.split("? ").join("?\n\n~ ")}</Text>{" "}
+        <Image src="/dadJoke.png" alt="Dad Joke" h="250px" objectFit="cover" />
       </VStack>
     </WidgetCard>
   );
