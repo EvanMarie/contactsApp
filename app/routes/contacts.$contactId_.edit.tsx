@@ -6,9 +6,12 @@ import invariant from "tiny-invariant";
 // import { getContact, updateContact } from "../data";
 import { getContact, updateContact } from "~/myFakeData";
 import {
+  Avatar,
   Button,
+  Center,
   Flex,
   HStack,
+  Image,
   Input,
   Stack,
   Text,
@@ -92,7 +95,7 @@ function InputField({
           defaultValue={defaultValue}
           name={fieldName}
           placeholder={placeholder}
-          rows={7}
+          rows={5}
         />
       )}
     </HStack>
@@ -124,8 +127,8 @@ export default function EditContact() {
             w="100%"
             maxW={{ base: "500px", md: "625px", lg: "1200px" }}
             pt={4}
-            spacing={4}
-            bg="gray.700"
+            spacing={10}
+            bg="gray.800"
             p={4}
             rounded="md"
             shadow="2xl"
@@ -137,7 +140,7 @@ export default function EditContact() {
               justify={{ base: "center", lg: "space-between" }}
               align={{ base: "center", lg: "flex-start" }}
             >
-              <VStack w={{ base: "100%", lg: "50%" }} spacing={4}>
+              <VStack w={{ base: "100%", lg: "50%" }} spacing={6}>
                 <InputField
                   defaultValue={contact.first}
                   fieldName="first"
@@ -197,15 +200,6 @@ export default function EditContact() {
                   labelText="Gender"
                 />
                 <InputField
-                  defaultValue={contact.avatar}
-                  fieldName="avatar"
-                  placeholder="https://example.com/avatar.jpg"
-                  ariaLabel="Avatar URL"
-                  labelText="Avatar"
-                />
-              </VStack>
-              <VStack w={{ base: "100%", lg: "50%" }} spacing={4}>
-                <InputField
                   defaultValue={
                     contact.tags && Array.isArray(contact.tags)
                       ? contact.tags.join(", ")
@@ -216,6 +210,19 @@ export default function EditContact() {
                   ariaLabel="Tags"
                   labelText="Tags"
                 />
+              </VStack>
+              <VStack w={{ base: "100%", lg: "50%" }} spacing={6}>
+                <InputField
+                  defaultValue={contact.avatar}
+                  fieldName="avatar"
+                  placeholder="https://example.com/avatar.jpg"
+                  ariaLabel="Avatar URL"
+                  labelText="Avatar"
+                />
+                <Center w="100%">
+                  <Avatar src={contact.avatar} size="2xl" />
+                </Center>
+
                 <InputField
                   defaultValue={contact.address}
                   fieldName="address"

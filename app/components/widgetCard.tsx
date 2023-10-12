@@ -25,6 +25,11 @@ export default function WidgetCard({
       bg={bg}
       shadow="2xl"
       p={3}
+      pt={2}
+      sx={{
+        breakInside: "avoid",
+        WebkitColumnBreakInside: "avoid",
+      }}
       rounded="xl"
     >
       <VStack w="100%">{children}</VStack>
