@@ -70,6 +70,7 @@ export default function NewsWidget() {
               bg="purple.200"
               rounded="lg"
               color="gray.900"
+              maxW="335px"
             >
               <VStack w="100%" align="flex-start">
                 <Text fontWeight="bold" noOfLines={2}>
